@@ -58,23 +58,37 @@
     <section class="search-section">
         <div class="container">
             <h2>Cari Teknisi Berdasarkan Masalah Anda</h2>
+
+            <!-- ANOTASI / PETUNJUK -->
+            <p class="search-hint">
+                Masukkan kata kunci apa saja untuk mencari teknisi yang tepat.
+                Misalnya berdasarkan masalah, teknologi, atau alat yang digunakan, contohnya:
+                <em>hama padi</em>,
+                <em>irigasi</em>,
+                <em>sensor tanah</em>,
+                <em>IoT pertanian</em>.
+            </p>
+
+
             <div class="search-box">
-                <input 
-                    type="text" 
-                    id="searchInput" 
-                    placeholder="Ketik masalah yang anda alami..." 
-                    class="search-input"
-                >
-                <button onclick="searchTechnicians()" class="btn-primary">Cari</button>
+                <input type="text" id="searchInput" placeholder="Ketik masalah yang anda alami..." class="search-input">
+                <button onclick="searchTechnicians()" class="btn-primary">
+                    Cari
+                </button>
             </div>
+
             <div id="searchResults" class="search-results hidden">
                 <h3>Hasil Pencarian</h3>
                 <div id="searchGrid" class="grid-3">
                     <!-- Hasil pencarian akan ditampilkan di sini -->
                 </div>
             </div>
+
             <div id="noResults" class="no-results hidden">
-                <p>Tidak ada teknisi yang cocok dengan masalah Anda. Silakan coba kata kunci lain.</p>
+                <p>
+                    Tidak ada teknisi yang cocok dengan masalah Anda.
+                    Silakan coba kata kunci lain.
+                </p>
             </div>
         </div>
     </section>
