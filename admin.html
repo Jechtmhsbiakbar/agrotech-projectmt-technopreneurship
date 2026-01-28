@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard | AgroTech</title>
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+    <div class="container">
+        <div class="logo">
+            <h2>AgroTech Admin</h2>
+        </div>
+
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="technicians.html">Technicians</a></li>
+                <li><a href="booking.html">Bookings</a></li>
+                <li><a href="admin.html" class="active">Admin</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="page-hero">
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <p>Manage service requests and monitor bookings.</p>
+    </div>
+</section>
+
+<!-- DASHBOARD CONTENT -->
+<section class="admin-dashboard">
+    <div class="container">
+
+        <h3>📋 Booking Requests</h3>
+
+        <table class="admin-table" id="bookingTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Location</th>
+                    <th>Technician</th>
+                    <th>Problem</th>
+                    <th>Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Data loaded via JS -->
+            </tbody>
+        </table>
+
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="container">
+        <p>© 2026 AgroTech Admin Panel</p>
+    </div>
+</footer>
+
+<!-- SCRIPT -->
+<script>
+const tableBody = document.querySelector("#bookingTable tbody");
+const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+
+if (bookings.length === 0) {
+    tableBody.innerHTML = `
+        <tr>
+            <td colspan="6" style="text-align:center;">No bookings yet</td>
+        </tr>
+    `;
+} else {
+    bookings.forEach(b => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+            <td>${b.name}</td>
+            <td>${b.phone}</td>
+            <td>${b.location}</td>
+            <td>${b.tech}</td>
+            <td>${b.problem}</td>
+            <td>${b.time}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+</script>
+
+</body>
+</html>
