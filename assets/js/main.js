@@ -128,10 +128,47 @@ function loginAs(role) {
   localStorage.setItem("loginRole", role);
 
   if (role === "admin") {
-    window.location.href = "layout/admin.html";
-  } else if (role === "technician") {
-    window.location.href = "layout/technician.html";
+    window.location.href = "admin.html";
+  } else if (role === "teknisi") {
+    window.location.href = "teknisi.html";
   } else {
     alert("Logged in as User (Demo Mode)");
   }
 }
+
+// Bagian teknisi.html
+document.addEventListener("DOMContentLoaded", () => {
+  if (document.getElementById("technicianJobs")) {
+    loadTechnicianJobs();
+  }
+});
+
+function loadTechnicianJobs() {
+  const jobs = JSON.parse(localStorage.getItem("bookings")) || [];
+  const container = document.getElementById("technicianJobs");
+
+  if (jobs.length === 0) {
+    container.innerHTML = "<p>No jobs yet.</p>";
+    return;
+  }
+
+  jobs.forEach(job => {
+    const div = document.createElement("div");
+    div.className = "job-card";
+    div.innerHTML = `
+      <h3>${job.name}</h3>
+      <p>Tech: ${job.tech}</p>
+      <p>Location: ${job.location}</p>
+      <p>Problem: ${job.problem}</p>
+      <p>Time: ${job.time}</p>
+    `;
+    container.appendChild(div);
+  });
+}
+
+// LogOut
+function logout() {
+  localStorage.removeItem("userRole");
+  window.location.href = "../index.html";
+}
+
