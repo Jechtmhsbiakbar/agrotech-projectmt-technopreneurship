@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>AgroTech | Smart Agriculture Service Platform</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="assets/data/technicians.js" defer></script>
     <script src="assets/js/main.js" defer></script>
 </head>
 
@@ -50,6 +51,31 @@
             <h1>Connecting Farmers with Smart Agriculture Technicians</h1>
             <p>AgroTech is a digital platform to book certified agricultural technicians easily.</p>
             <a href="booking.html" class="btn-primary">Book a Technician</a>
+        </div>
+    </section>
+
+    <!-- SEARCH SECTION -->
+    <section class="search-section">
+        <div class="container">
+            <h2>Cari Teknisi Berdasarkan Masalah Anda</h2>
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    id="searchInput" 
+                    placeholder="Ketik masalah yang anda alami..." 
+                    class="search-input"
+                >
+                <button onclick="searchTechnicians()" class="btn-primary">Cari</button>
+            </div>
+            <div id="searchResults" class="search-results hidden">
+                <h3>Hasil Pencarian</h3>
+                <div id="searchGrid" class="grid-3">
+                    <!-- Hasil pencarian akan ditampilkan di sini -->
+                </div>
+            </div>
+            <div id="noResults" class="no-results hidden">
+                <p>Tidak ada teknisi yang cocok dengan masalah Anda. Silakan coba kata kunci lain.</p>
+            </div>
         </div>
     </section>
 
@@ -135,8 +161,6 @@
             <p class="copyright">© 2026 AgroTech. All rights reserved.</p>
         </div>
     </footer>
-
-<script src="assets/js/main.js" defer></script>
 
 </body>
 

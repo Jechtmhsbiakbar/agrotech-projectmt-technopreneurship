@@ -1,124 +1,124 @@
-// data/technicians.js
+// assets/data/technicians.js
 
 const technicians = [
   {
     id: 1,
     name: "Budi Santoso",
-    skill: "IoT Agriculture & Sensor Installation",
+    skill: "IoT Pertanian dan Instalasi Sensor",
     location: "Pontianak",
     rating: 4.8,
-    price: "Rp 150.000 / visit"
+    price: "Rp 150.000 / kunjungan"
   },
   {
     id: 2,
     name: "Siti Rahma",
-    skill: "Electrical & Solar Panel Technician",
+    skill: "Teknisi Listrik dan Panel Surya",
     location: "Singkawang",
     rating: 4.6,
-    price: "Rp 200.000 / visit"
+    price: "Rp 200.000 / kunjungan"
   },
   {
     id: 3,
     name: "Andi Pratama",
-    skill: "Soil Monitoring & Smart Irrigation",
+    skill: "Monitoring Tanah dan Irigasi Pintar",
     location: "Kubu Raya",
     rating: 4.9,
-    price: "Rp 180.000 / visit"
+    price: "Rp 180.000 / kunjungan"
   },
   {
     id: 4,
     name: "Hendra Wijaya",
-    skill: "Drone Crop Monitoring & Analysis",
+    skill: "Monitoring Tanaman Menggunakan Drone",
     location: "Mempawah",
     rating: 4.7,
-    price: "Rp 250.000 / visit"
+    price: "Rp 250.000 / kunjungan"
   },
   {
     id: 5,
     name: "Nur Azizah",
-    skill: "Pest Management & Disease Control",
+    skill: "Pengendalian Hama dan Penyakit Tanaman",
     location: "Pontianak",
     rating: 4.5,
-    price: "Rp 120.000 / visit"
+    price: "Rp 120.000 / kunjungan"
   },
   {
     id: 6,
     name: "Rahmat Hidayat",
-    skill: "Water System Installation & Maintenance",
+    skill: "Instalasi dan Perawatan Sistem Air",
     location: "Sambas",
     rating: 4.8,
-    price: "Rp 160.000 / visit"
+    price: "Rp 160.000 / kunjungan"
   },
   {
     id: 7,
     name: "Dewi Kusuma",
-    skill: "Fertilizer Management & Soil Testing",
+    skill: "Manajemen Pupuk dan Uji Tanah",
     location: "Kubu Raya",
     rating: 4.6,
-    price: "Rp 140.000 / visit"
+    price: "Rp 140.000 / kunjungan"
   },
   {
     id: 8,
     name: "Irfan Maulana",
-    skill: "Greenhouse System Installation",
+    skill: "Instalasi Sistem Greenhouse",
     location: "Singkawang",
     rating: 4.9,
-    price: "Rp 220.000 / visit"
+    price: "Rp 220.000 / kunjungan"
   },
   {
     id: 9,
     name: "Linda Wijaya",
-    skill: "Organic Farming Consultant",
+    skill: "Konsultan Pertanian Organik",
     location: "Pontianak",
     rating: 4.7,
-    price: "Rp 130.000 / visit"
+    price: "Rp 130.000 / kunjungan"
   },
   {
     id: 10,
     name: "Bambang Suryanto",
-    skill: "Machinery Repair & Maintenance",
+    skill: "Perbaikan dan Perawatan Mesin Pertanian",
     location: "Mempawah",
     rating: 4.8,
-    price: "Rp 170.000 / visit"
+    price: "Rp 170.000 / kunjungan"
   },
   {
     id: 11,
     name: "Rini Sartika",
-    skill: "Livestock Farming Technology",
+    skill: "Teknologi Peternakan",
     location: "Kubu Raya",
     rating: 4.5,
-    price: "Rp 140.000 / visit"
+    price: "Rp 140.000 / kunjungan"
   },
   {
     id: 12,
     name: "Yusuf Rahman",
-    skill: "Weather Station Installation & Data",
+    skill: "Instalasi Stasiun Cuaca dan Data Iklim",
     location: "Sambas",
     rating: 4.9,
-    price: "Rp 190.000 / visit"
+    price: "Rp 190.000 / kunjungan"
   },
   {
     id: 13,
     name: "Sinta Kusuma",
-    skill: "Fish Pond Management & Monitoring",
+    skill: "Manajemen dan Monitoring Kolam Ikan",
     location: "Pontianak",
     rating: 4.6,
-    price: "Rp 150.000 / visit"
+    price: "Rp 150.000 / kunjungan"
   },
   {
     id: 14,
     name: "Doni Wijaya",
-    skill: "Renewable Energy for Farms",
+    skill: "Energi Terbarukan untuk Pertanian",
     location: "Singkawang",
     rating: 4.8,
-    price: "Rp 210.000 / visit"
+    price: "Rp 210.000 / kunjungan"
   },
   {
     id: 15,
     name: "Mega Saputri",
-    skill: "Agricultural Data Analytics",
+    skill: "Analisis Data Pertanian",
     location: "Mempawah",
     rating: 4.7,
-    price: "Rp 180.000 / visit"
+    price: "Rp 180.000 / kunjungan"
   }
 ];

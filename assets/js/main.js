@@ -26,7 +26,7 @@ function renderTechnicians() {
       <p><strong>Location:</strong> ${tech.location}</p>
       <p><strong>Rating:</strong> ⭐ ${tech.rating}</p>
       <p><strong>Price:</strong> ${tech.price}</p>
-      <button onclick="selectTechnician('${tech.name}')" class="btn-primary">Book Now</button>
+      <button onclick="bookTechnician('${tech.name}')" class="btn-primary">Book Now</button>
     `;
 
     grid.appendChild(card);
@@ -34,30 +34,38 @@ function renderTechnicians() {
 }
 
 // Save technician selection
-function selectTechnician(name) {
-  localStorage.setItem("selectedTechnician", name);
-  window.location.href = "layout/booking.html";
+function bookTechnician(name) {
+  const techName = encodeURIComponent(name);
+  window.location.href = `booking.html?technician=${techName}`;
 }
 
 // ================= BOOKING HANDLER =================
 function bookingHandler() {
   const form = document.getElementById("bookingForm");
-  const selectedTech = localStorage.getItem("selectedTechnician");
+  if (!form) return;
 
-  if (selectedTech) {
-    document.getElementById("techSelect").value = selectedTech;
+  // ⛔ cegah double listener
+  if (form.dataset.listener === "true") return;
+  form.dataset.listener = "true";
+
+  // 🔥 AMBIL TEKNISI DARI URL
+  const params = new URLSearchParams(window.location.search);
+  const techFromUrl = params.get("technician");
+  if (techFromUrl) {
+    document.getElementById("techSelect").value =
+      decodeURIComponent(techFromUrl);
   }
 
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
-    const name = document.getElementById("userName").value;
-    const phone = document.getElementById("userPhone").value;
-    const location = document.getElementById("userLocation").value;
-    const tech = document.getElementById("techSelect").value;
-    const problem = document.getElementById("problemDesc").value;
+    const name = document.getElementById("userName").value.trim();
+    const phone = document.getElementById("userPhone").value.trim();
+    const location = document.getElementById("userLocation").value.trim();
+    const tech = document.getElementById("techSelect").value.trim();
+    const problem = document.getElementById("problemDesc").value.trim();
 
-    if (!name || !phone || !location || !problem) {
+    if (!name || !phone || !location || !tech || !problem) {
       alert("Please fill all required fields!");
       return;
     }
@@ -71,9 +79,7 @@ function bookingHandler() {
       time: new Date().toLocaleString(),
     };
 
-    console.log("Booking Submitted:", bookingData);
-
-    let bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+    const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
     bookings.push(bookingData);
     localStorage.setItem("bookings", JSON.stringify(bookings));
 
@@ -136,6 +142,94 @@ function loginAs(role) {
   }
 }
 
+// ================= SEARCH TECHNICIAN SYSTEM =================
+function searchTechnicians() {
+  const input = document
+    .getElementById("searchInput")
+    .value.toLowerCase()
+    .trim();
+
+  const searchResults = document.getElementById("searchResults");
+  const noResults = document.getElementById("noResults");
+  const searchGrid = document.getElementById("searchGrid");
+
+  if (!input) {
+    searchResults.classList.add("hidden");
+    noResults.classList.add("hidden");
+    return;
+  }
+
+  // Pecah input user → buang kata tidak penting
+  const keywords = input.split(/\s+/).filter((word) => word.length > 2);
+
+  const results = [];
+
+  technicians.forEach((tech) => {
+    let matchCount = 0;
+
+    const searchableText = `
+      ${tech.name}
+      ${tech.skill}
+      ${tech.location}
+    `.toLowerCase();
+
+    keywords.forEach((key) => {
+      // Match langsung
+      if (searchableText.includes(key)) {
+        matchCount++;
+      }
+    });
+
+    // WAJIB ada minimal 1 keyword yang cocok
+    if (matchCount > 0) {
+      results.push({ tech, matchCount });
+    }
+  });
+
+  // Urutkan berdasarkan jumlah kecocokan
+  results.sort((a, b) => b.matchCount - a.matchCount);
+
+  // Render hasil
+  if (results.length === 0) {
+    searchResults.classList.add("hidden");
+    noResults.classList.remove("hidden");
+    return;
+  }
+
+  searchGrid.innerHTML = "";
+  results.forEach(({ tech }) => {
+    const card = document.createElement("div");
+    card.className = "technician-card";
+
+    card.innerHTML = `
+      <h3>${tech.name}</h3>
+      <p><strong>Skill:</strong> ${tech.skill}</p>
+      <p><strong>Location:</strong> ${tech.location}</p>
+      <p><strong>Rating:</strong> ⭐ ${tech.rating}</p>
+      <p><strong>Price:</strong> ${tech.price}</p>
+      <button onclick="bookTechnician('${tech.name}')" class="btn-primary">Book Now</button>
+    `;
+
+    searchGrid.appendChild(card);
+  });
+
+  searchResults.classList.remove("hidden");
+  noResults.classList.add("hidden");
+  searchResults.scrollIntoView({ behavior: "smooth" });
+}
+
+// Search saat enter di keyboard
+document.addEventListener("DOMContentLoaded", () => {
+  const searchInput = document.getElementById("searchInput");
+  if (searchInput) {
+    searchInput.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        searchTechnicians();
+      }
+    });
+  }
+});
+
 // Bagian teknisi.html
 document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("technicianJobs")) {
@@ -152,7 +246,7 @@ function loadTechnicianJobs() {
     return;
   }
 
-  jobs.forEach(job => {
+  jobs.forEach((job) => {
     const div = document.createElement("div");
     div.className = "job-card";
     div.innerHTML = `
@@ -169,6 +263,54 @@ function loadTechnicianJobs() {
 // LogOut
 function logout() {
   localStorage.removeItem("userRole");
-  window.location.href = "../index.html";
+  window.location.href = "index.html";
 }
 
+// redirect nama teknisi ke booking.html
+function bookTechnician(name) {
+  const techName = encodeURIComponent(name);
+  window.location.href = `booking.html?technician=${techName}`;
+}
+
+function renderSearchResults(data) {
+  const grid = document.getElementById("searchGrid");
+  grid.innerHTML = "";
+
+  data.forEach((t) => {
+    grid.innerHTML += `
+      <div class="card">
+        <h3>${t.name}</h3>
+        <p>${t.skill}</p>
+        <p>${t.location}</p>
+        <button onclick="bookTechnician('${tech.name}')" class="btn-primary">Book Now</button>
+      </div>
+    `;
+  });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  const techSelect = document.getElementById("techSelect");
+  if (!techSelect || typeof technicians === "undefined") return;
+
+  // 🔥 CEGAH DOUBLE LOAD
+  if (techSelect.dataset.loaded) return;
+  techSelect.dataset.loaded = "true";
+
+  // 🔥 RESET OPTION (INI KUNCI UTAMA)
+  techSelect.innerHTML = '<option value="">-- Pilih Teknisi --</option>';
+
+  technicians.forEach((t) => {
+    const option = document.createElement("option");
+    option.value = t.name;
+    option.textContent = `${t.name} (${t.location})`;
+    techSelect.appendChild(option);
+  });
+
+  // 🔁 Ambil teknisi dari URL (jika ada)
+  const params = new URLSearchParams(window.location.search);
+  const selectedTech = params.get("technician");
+
+  if (selectedTech) {
+    techSelect.value = decodeURIComponent(selectedTech);
+  }
+});
