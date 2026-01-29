@@ -9,7 +9,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   // Load booking result page - cek dengan ID yang benar
-  if (document.getElementById("latestBookingDetails") || document.getElementById("bookingHistoryList")) {
+  if (
+    document.getElementById("latestBookingDetails") ||
+    document.getElementById("bookingHistoryList")
+  ) {
     loadBookingResult();
   }
 
@@ -76,7 +79,7 @@ function bookingHandler() {
     }
 
     // Dapatkan data teknisi lengkap
-    const techData = technicians.find(t => t.name === tech);
+    const techData = technicians.find((t) => t.name === tech);
 
     const bookingData = {
       name,
@@ -87,7 +90,7 @@ function bookingHandler() {
       techPrice: techData ? techData.price : "-",
       problem,
       time: new Date().toLocaleString(),
-      isPaid: false
+      isPaid: false,
     };
 
     console.log("Saving booking data:", bookingData);
@@ -112,7 +115,7 @@ function bookingHandler() {
 // ================= LOAD BOOKING RESULT =================
 function loadBookingResult() {
   console.log("loadBookingResult called");
-  
+
   const lastBooking = JSON.parse(localStorage.getItem("lastBooking"));
   const allBookings = JSON.parse(localStorage.getItem("bookings")) || [];
 
@@ -122,12 +125,12 @@ function loadBookingResult() {
   // Show latest unpaid booking
   if (lastBooking && !lastBooking.isPaid) {
     console.log("Showing latest booking section");
-    
+
     const latestSection = document.getElementById("latestBookingSection");
     if (latestSection) {
       latestSection.classList.remove("hidden");
     }
-    
+
     const detailsDiv = document.getElementById("latestBookingDetails");
     if (detailsDiv) {
       detailsDiv.innerHTML = `
@@ -168,7 +171,7 @@ function loadBookingResult() {
       if (techNameElement) {
         techNameElement.textContent = lastBooking.tech;
       }
-      
+
       const phoneLink = document.getElementById("techPhone");
       if (phoneLink) {
         phoneLink.textContent = lastBooking.techPhone;
@@ -190,7 +193,7 @@ function loadBookingResult() {
 // ================= LOAD BOOKING HISTORY =================
 function loadBookingHistory(bookings) {
   console.log("loadBookingHistory called with:", bookings);
-  
+
   const historyList = document.getElementById("bookingHistoryList");
   const noBookingsMsg = document.getElementById("noBookingsMessage");
 
@@ -216,7 +219,7 @@ function loadBookingHistory(bookings) {
   sortedBookings.forEach((booking, index) => {
     const card = document.createElement("div");
     card.className = "history-card";
-    
+
     const statusClass = booking.isPaid ? "paid" : "pending";
     const statusText = booking.isPaid ? "Sudah Dibayar" : "Menunggu Pembayaran";
     const statusIcon = booking.isPaid ? "✅" : "⏳";
@@ -278,7 +281,7 @@ function loadBookingHistory(bookings) {
           📞 ${booking.techPhone}
         </div>
         <div style="display: flex; gap: 10px;">
-          ${!booking.isPaid ? `<button onclick="payHistoryBooking(${bookings.length - 1 - index})" class="btn-pay-small">💳 Bayar</button>` : ''}
+          ${!booking.isPaid ? `<button onclick="payHistoryBooking(${bookings.length - 1 - index})" class="btn-pay-small">💳 Bayar</button>` : ""}
           <button onclick="deleteBooking(${bookings.length - 1 - index})" class="btn-delete-small">🗑️ Hapus</button>
         </div>
       </div>
@@ -295,18 +298,18 @@ function payHistoryBooking(index) {
   }
 
   const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
-  
+
   if (index >= 0 && index < bookings.length) {
     bookings[index].isPaid = true;
     localStorage.setItem("bookings", JSON.stringify(bookings));
-    
+
     // Update lastBooking jika yang dibayar adalah booking terakhir
     const lastBooking = JSON.parse(localStorage.getItem("lastBooking"));
     if (lastBooking && lastBooking.time === bookings[index].time) {
       lastBooking.isPaid = true;
       localStorage.setItem("lastBooking", JSON.stringify(lastBooking));
     }
-    
+
     // Reload halaman untuk menampilkan perubahan
     location.reload();
   }
@@ -319,18 +322,18 @@ function deleteBooking(index) {
   }
 
   const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
-  
+
   if (index >= 0 && index < bookings.length) {
     const deletedBooking = bookings[index];
     bookings.splice(index, 1);
     localStorage.setItem("bookings", JSON.stringify(bookings));
-    
+
     // Hapus lastBooking jika yang dihapus adalah booking terakhir
     const lastBooking = JSON.parse(localStorage.getItem("lastBooking"));
     if (lastBooking && lastBooking.time === deletedBooking.time) {
       localStorage.removeItem("lastBooking");
     }
-    
+
     // Reload halaman
     location.reload();
   }
@@ -344,7 +347,7 @@ function clearAllBookings() {
 
   localStorage.removeItem("bookings");
   localStorage.removeItem("lastBooking");
-  
+
   // Reload halaman
   location.reload();
 }
@@ -627,3 +630,111 @@ document.addEventListener("DOMContentLoaded", function () {
     techSelect.value = decodeURIComponent(selectedTech);
   }
 });
+
+/* =====================================================
+   GLOBAL HOME FADE IN & OUT (2025)
+   Apply to ALL elements except background
+   ===================================================== */
+(function () {
+  const reducedMotion = window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+  if (reducedMotion) return;
+
+  /* =====================
+     CONFIG
+     ===================== */
+  const EXCLUDED_SELECTORS = [
+    "body",
+    "html",
+    ".hero",
+    ".hero::before",
+    ".hero::after",
+    ".background",
+    ".bg",
+    ".bg-layer",
+    ".blob",
+    ".glow",
+    ".overlay",
+    "[data-bg]",
+    "svg defs",
+    "svg filter",
+  ];
+
+  const isExcluded = (el) =>
+    EXCLUDED_SELECTORS.some((sel) => {
+      try {
+        return el.matches(sel);
+      } catch {
+        return false;
+      }
+    });
+
+  /* =====================
+     COLLECT ELEMENTS
+     ===================== */
+  const elements = Array.from(
+    document.querySelectorAll("main * , section *"),
+  ).filter((el) => {
+    if (isExcluded(el)) return false;
+    if (el.offsetParent === null) return false; // hidden
+    return true;
+  });
+
+  if (!elements.length) return;
+
+  /* =====================
+     INITIAL STATE
+     ===================== */
+  elements.forEach((el) => {
+    el.style.opacity = 0;
+    el.style.transform = "translateY(50px)";
+    el.style.transition =
+      "opacity .6s ease, transform .6s cubic-bezier(.2,.9,.25,1)";
+    el.style.willChange = "opacity, transform";
+  });
+
+  /* =====================
+     SCROLL DIRECTION
+     ===================== */
+  let lastScrollY = window.scrollY;
+  let scrollDir = "down";
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      scrollDir = window.scrollY > lastScrollY ? "down" : "up";
+      lastScrollY = window.scrollY;
+    },
+    { passive: true },
+  );
+
+  /* =====================
+     INTERSECTION OBSERVER
+     ===================== */
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const el = entry.target;
+
+        if (entry.isIntersecting) {
+          // FADE IN
+          el.style.opacity = 1;
+          el.style.transform = "translateY(0)";
+        } else {
+          // FADE OUT only when scrolling UP
+          if (scrollDir === "up") {
+            el.style.opacity = 0;
+            el.style.transform = "translateY(40px)";
+          }
+        }
+      });
+    },
+    {
+      threshold: 0.2,
+      rootMargin: "-10% 0px -10% 0px",
+    },
+  );
+
+  elements.forEach((el) => observer.observe(el));
+})();
