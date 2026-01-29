@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Bookings | AgroTech</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/style-booking-result.css">
+    <script src="assets/data/technicians.js" defer></script>
+    <script src="assets/js/main.js" defer></script>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h2>AgroTech</h2>
+            </div>
+
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="technicians.html">Technicians</a></li>
+                    <li><a href="booking.html">Book Service</a></li>
+                    <li><a href="booking-result.html" class="active">My Booking</a></li>
+                </ul>
+            </nav>
+
+            <div class="cta">
+                <a href="booking.html" class="btn-primary">+ New Booking</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="container">
+            <h1>📋 My Bookings</h1>
+            <p>Riwayat dan detail pemesanan layanan teknisi Anda</p>
+        </div>
+    </section>
+
+    <!-- BOOKING LIST SECTION -->
+    <section class="booking-result">
+        <div class="container">
+
+            <!-- LATEST BOOKING (if exists and not paid) -->
+            <div id="latestBookingSection" class="latest-booking-section hidden">
+                <div class="result-card latest-card">
+                    <div class="card-header">
+                        <h2>🔔 Booking Terbaru</h2>
+                        <span class="status-badge pending">Menunggu Pembayaran</span>
+                    </div>
+                    
+                    <div class="booking-info" id="latestBookingDetails">
+                        <!-- Loaded via JavaScript -->
+                    </div>
+
+                    <!-- PAYMENT SECTION -->
+                    <div class="payment-section" id="paymentSection">
+                        <h3>💳 Pembayaran</h3>
+                        <div class="payment-info">
+                            <div class="price-row">
+                                <span class="price-label">Total Biaya:</span>
+                                <span class="price-value" id="totalPrice">-</span>
+                            </div>
+                            <p class="payment-note">💡 Pembayaran dapat dilakukan langsung kepada teknisi atau melalui transfer</p>
+                        </div>
+                        <button onclick="processPayment()" class="btn-primary btn-large">
+                            <span>💳 Bayar Sekarang</span>
+                        </button>
+                    </div>
+
+                    <!-- CONTACT SECTION (Hidden until payment) -->
+                    <div class="contact-section hidden" id="contactSection">
+                        <div class="success-banner">
+                            <h3>✅ Pembayaran Berhasil!</h3>
+                            <p>Booking Anda telah dikonfirmasi</p>
+                        </div>
+                        
+                        <div class="contact-info">
+                            <p class="contact-title">Silakan hubungi teknisi untuk konfirmasi jadwal:</p>
+                            <div class="technician-contact">
+                                <div class="tech-avatar">👨‍🔧</div>
+                                <div class="tech-details">
+                                    <h4 id="techName">-</h4>
+                                    <div class="phone-row">
+                                        <span class="phone-icon">📞</span>
+                                        <a href="#" id="techPhone" class="phone-link">-</a>
+                                    </div>
+                                    <p class="contact-note">⏰ Teknisi akan menghubungi Anda dalam 1x24 jam</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="action-buttons">
+                            <a href="index.html" class="btn-secondary">← Kembali ke Beranda</a>
+                            <a href="booking.html" class="btn-primary">+ Booking Baru</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ALL BOOKINGS HISTORY -->
+            <div class="booking-history-section">
+                <div class="section-header">
+                    <h2>📚 Riwayat Booking</h2>
+                    <button onclick="clearAllBookings()" class="btn-clear">🗑️ Hapus Semua</button>
+                </div>
+
+                <div id="bookingHistoryList" class="booking-history-list">
+                    <!-- Loaded via JavaScript -->
+                </div>
+
+                <!-- NO BOOKINGS MESSAGE -->
+                <div id="noBookingsMessage" class="no-booking-data hidden">
+                    <div class="empty-state">
+                        <div class="empty-icon">📭</div>
+                        <h3>Belum Ada Booking</h3>
+                        <p>Anda belum melakukan booking layanan teknisi.</p>
+                        <p>Mulai booking sekarang untuk mendapatkan bantuan profesional!</p>
+                        <a href="booking.html" class="btn-primary btn-large">
+                            <span>+ Buat Booking Pertama</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+
+                <div>
+                    <h3>AgroTech</h3>
+                    <p>Platform connecting farmers with agricultural technicians.</p>
+                </div>
+
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Services</h4>
+                    <ul>
+                        <li>Field Technician</li>
+                        <li>IoT Installation</li>
+                        <li>Soil Monitoring</li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4>Follow Us</h4>
+                    <p>Instagram | LinkedIn | GitHub</p>
+                </div>
+
+            </div>
+
+            <p class="copyright">© 2026 AgroTech. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
