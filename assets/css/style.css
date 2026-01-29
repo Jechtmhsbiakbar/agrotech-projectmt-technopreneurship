@@ -281,7 +281,7 @@ nav ul li a:focus-visible {
   bottom: 0;
   width: 100%;
   height: 100%;
-  background-image: url("../images/hero-image.png");
+  background-image: url("../img/hero-image.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
