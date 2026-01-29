@@ -8,6 +8,11 @@ document.addEventListener("DOMContentLoaded", () => {
     bookingHandler();
   }
 
+  // Load booking result page - cek dengan ID yang benar
+  if (document.getElementById("latestBookingDetails") || document.getElementById("bookingHistoryList")) {
+    loadBookingResult();
+  }
+
   loginModalHandler();
 });
 
@@ -70,22 +75,327 @@ function bookingHandler() {
       return;
     }
 
+    // Dapatkan data teknisi lengkap
+    const techData = technicians.find(t => t.name === tech);
+
     const bookingData = {
       name,
       phone,
       location,
       tech,
+      techPhone: techData ? techData.phone : "-",
+      techPrice: techData ? techData.price : "-",
       problem,
       time: new Date().toLocaleString(),
+      isPaid: false
     };
+
+    console.log("Saving booking data:", bookingData);
 
     const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
     bookings.push(bookingData);
     localStorage.setItem("bookings", JSON.stringify(bookings));
 
+    // Simpan booking terakhir untuk halaman result
+    localStorage.setItem("lastBooking", JSON.stringify(bookingData));
+
+    console.log("Data saved to localStorage");
+    console.log("lastBooking:", localStorage.getItem("lastBooking"));
+    console.log("bookings:", localStorage.getItem("bookings"));
+
+    // Tampilkan popup dengan tombol ke halaman result
     showSuccessPopup(bookingData);
     form.reset();
   });
+}
+
+// ================= LOAD BOOKING RESULT =================
+function loadBookingResult() {
+  console.log("loadBookingResult called");
+  
+  const lastBooking = JSON.parse(localStorage.getItem("lastBooking"));
+  const allBookings = JSON.parse(localStorage.getItem("bookings")) || [];
+
+  console.log("lastBooking:", lastBooking);
+  console.log("allBookings:", allBookings);
+
+  // Show latest unpaid booking
+  if (lastBooking && !lastBooking.isPaid) {
+    console.log("Showing latest booking section");
+    
+    const latestSection = document.getElementById("latestBookingSection");
+    if (latestSection) {
+      latestSection.classList.remove("hidden");
+    }
+    
+    const detailsDiv = document.getElementById("latestBookingDetails");
+    if (detailsDiv) {
+      detailsDiv.innerHTML = `
+        <div class="info-row">
+          <span class="label">👤 Nama Pemesan:</span>
+          <span class="value">${lastBooking.name}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">📞 No. Telepon:</span>
+          <span class="value">${lastBooking.phone}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">📍 Lokasi Lahan:</span>
+          <span class="value">${lastBooking.location}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">👨‍🔧 Teknisi:</span>
+          <span class="value">${lastBooking.tech}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">⚠️ Masalah:</span>
+          <span class="value">${lastBooking.problem}</span>
+        </div>
+        <div class="info-row">
+          <span class="label">🕐 Waktu Booking:</span>
+          <span class="value">${lastBooking.time}</span>
+        </div>
+      `;
+
+      // Set price
+      const priceElement = document.getElementById("totalPrice");
+      if (priceElement) {
+        priceElement.textContent = lastBooking.techPrice;
+      }
+
+      // Set technician data for contact section
+      const techNameElement = document.getElementById("techName");
+      if (techNameElement) {
+        techNameElement.textContent = lastBooking.tech;
+      }
+      
+      const phoneLink = document.getElementById("techPhone");
+      if (phoneLink) {
+        phoneLink.textContent = lastBooking.techPhone;
+        phoneLink.href = `tel:${lastBooking.techPhone}`;
+      }
+    }
+  } else {
+    console.log("No unpaid booking to show");
+    const latestSection = document.getElementById("latestBookingSection");
+    if (latestSection) {
+      latestSection.classList.add("hidden");
+    }
+  }
+
+  // Load booking history
+  loadBookingHistory(allBookings);
+}
+
+// ================= LOAD BOOKING HISTORY =================
+function loadBookingHistory(bookings) {
+  console.log("loadBookingHistory called with:", bookings);
+  
+  const historyList = document.getElementById("bookingHistoryList");
+  const noBookingsMsg = document.getElementById("noBookingsMessage");
+
+  if (!historyList || !noBookingsMsg) {
+    console.log("History elements not found");
+    return;
+  }
+
+  if (!bookings || bookings.length === 0) {
+    console.log("No bookings to display");
+    historyList.innerHTML = "";
+    noBookingsMsg.classList.remove("hidden");
+    return;
+  }
+
+  console.log("Displaying", bookings.length, "bookings");
+  noBookingsMsg.classList.add("hidden");
+  historyList.innerHTML = "";
+
+  // Sort bookings by time (newest first)
+  const sortedBookings = [...bookings].reverse();
+
+  sortedBookings.forEach((booking, index) => {
+    const card = document.createElement("div");
+    card.className = "history-card";
+    
+    const statusClass = booking.isPaid ? "paid" : "pending";
+    const statusText = booking.isPaid ? "Sudah Dibayar" : "Menunggu Pembayaran";
+    const statusIcon = booking.isPaid ? "✅" : "⏳";
+
+    card.innerHTML = `
+      <div class="history-card-header">
+        <div class="booking-number">Booking #${bookings.length - index}</div>
+        <span class="status-badge ${statusClass}">${statusIcon} ${statusText}</span>
+      </div>
+      
+      <div class="history-card-body">
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-icon">👤</span>
+            <div class="info-content">
+              <span class="info-label">Nama</span>
+              <span class="info-value">${booking.name}</span>
+            </div>
+          </div>
+          
+          <div class="info-item">
+            <span class="info-icon">👨‍🔧</span>
+            <div class="info-content">
+              <span class="info-label">Teknisi</span>
+              <span class="info-value">${booking.tech}</span>
+            </div>
+          </div>
+          
+          <div class="info-item">
+            <span class="info-icon">📍</span>
+            <div class="info-content">
+              <span class="info-label">Lokasi</span>
+              <span class="info-value">${booking.location}</span>
+            </div>
+          </div>
+          
+          <div class="info-item">
+            <span class="info-icon">💰</span>
+            <div class="info-content">
+              <span class="info-label">Biaya</span>
+              <span class="info-value">${booking.techPrice}</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="problem-section">
+          <span class="problem-label">⚠️ Masalah:</span>
+          <p class="problem-text">${booking.problem}</p>
+        </div>
+        
+        <div class="time-section">
+          <span class="time-icon">🕐</span>
+          <span>${booking.time}</span>
+        </div>
+      </div>
+      
+      <div class="history-card-footer">
+        <div class="tech-contact-mini">
+          📞 ${booking.techPhone}
+        </div>
+        <div style="display: flex; gap: 10px;">
+          ${!booking.isPaid ? `<button onclick="payHistoryBooking(${bookings.length - 1 - index})" class="btn-pay-small">💳 Bayar</button>` : ''}
+          <button onclick="deleteBooking(${bookings.length - 1 - index})" class="btn-delete-small">🗑️ Hapus</button>
+        </div>
+      </div>
+    `;
+
+    historyList.appendChild(card);
+  });
+}
+
+// ================= PAY HISTORY BOOKING =================
+function payHistoryBooking(index) {
+  if (!confirm("Apakah Anda yakin ingin melakukan pembayaran?")) {
+    return;
+  }
+
+  const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+  
+  if (index >= 0 && index < bookings.length) {
+    bookings[index].isPaid = true;
+    localStorage.setItem("bookings", JSON.stringify(bookings));
+    
+    // Update lastBooking jika yang dibayar adalah booking terakhir
+    const lastBooking = JSON.parse(localStorage.getItem("lastBooking"));
+    if (lastBooking && lastBooking.time === bookings[index].time) {
+      lastBooking.isPaid = true;
+      localStorage.setItem("lastBooking", JSON.stringify(lastBooking));
+    }
+    
+    // Reload halaman untuk menampilkan perubahan
+    location.reload();
+  }
+}
+
+// ================= DELETE BOOKING =================
+function deleteBooking(index) {
+  if (!confirm("Apakah Anda yakin ingin menghapus booking ini?")) {
+    return;
+  }
+
+  const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+  
+  if (index >= 0 && index < bookings.length) {
+    const deletedBooking = bookings[index];
+    bookings.splice(index, 1);
+    localStorage.setItem("bookings", JSON.stringify(bookings));
+    
+    // Hapus lastBooking jika yang dihapus adalah booking terakhir
+    const lastBooking = JSON.parse(localStorage.getItem("lastBooking"));
+    if (lastBooking && lastBooking.time === deletedBooking.time) {
+      localStorage.removeItem("lastBooking");
+    }
+    
+    // Reload halaman
+    location.reload();
+  }
+}
+
+// ================= CLEAR ALL BOOKINGS =================
+function clearAllBookings() {
+  if (!confirm("Apakah Anda yakin ingin menghapus SEMUA riwayat booking?")) {
+    return;
+  }
+
+  localStorage.removeItem("bookings");
+  localStorage.removeItem("lastBooking");
+  
+  // Reload halaman
+  location.reload();
+}
+
+// ================= PROCESS PAYMENT (Latest Booking) =================
+function processPayment() {
+  if (!confirm("Apakah Anda yakin ingin melakukan pembayaran?")) {
+    return;
+  }
+
+  const paymentSection = document.getElementById("paymentSection");
+  const contactSection = document.getElementById("contactSection");
+
+  // Show loading state
+  const payButton = paymentSection.querySelector("button");
+  payButton.textContent = "⏳ Processing...";
+  payButton.disabled = true;
+
+  // Simulate payment processing
+  setTimeout(() => {
+    // Update booking status
+    const lastBooking = JSON.parse(localStorage.getItem("lastBooking"));
+    lastBooking.isPaid = true;
+    localStorage.setItem("lastBooking", JSON.stringify(lastBooking));
+
+    // Update in bookings array
+    const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
+    const lastIndex = bookings.length - 1;
+    if (lastIndex >= 0) {
+      bookings[lastIndex].isPaid = true;
+      localStorage.setItem("bookings", JSON.stringify(bookings));
+    }
+
+    // Hide payment, show contact
+    paymentSection.classList.add("hidden");
+    contactSection.classList.remove("hidden");
+
+    // RELOAD BOOKING HISTORY untuk update status
+    const allBookings = JSON.parse(localStorage.getItem("bookings")) || [];
+    loadBookingHistory(allBookings);
+
+    // Update status badge di latest booking section
+    const statusBadge = document.querySelector(".latest-card .status-badge");
+    if (statusBadge) {
+      statusBadge.className = "status-badge paid";
+      statusBadge.textContent = "✅ Sudah Dibayar";
+    }
+
+    // Scroll to contact section
+    contactSection.scrollIntoView({ behavior: "smooth" });
+  }, 2000);
 }
 
 // ================= SUCCESS POPUP =================
@@ -101,7 +411,10 @@ function showSuccessPopup(data) {
       <p><strong>Location:</strong> ${data.location}</p>
       <p><strong>Problem:</strong> ${data.problem}</p>
       <p><strong>Time:</strong> ${data.time}</p>
-      <button id="closePopup" class="btn-primary">Close</button>
+      <div class="popup-buttons">
+        <a href="booking-result.html" class="btn-primary">Lihat Detail & Bayar</a>
+        <button id="closePopup" class="btn-secondary">Close</button>
+      </div>
     </div>
   `;
 
@@ -306,7 +619,7 @@ document.addEventListener("DOMContentLoaded", function () {
     techSelect.appendChild(option);
   });
 
-  // 🔁 Ambil teknisi dari URL (jika ada)
+  // 🔍 Ambil teknisi dari URL (jika ada)
   const params = new URLSearchParams(window.location.search);
   const selectedTech = params.get("technician");
 

@@ -167,7 +167,7 @@ nav a.active {
   color: #555;             /* Warna teks */
   font-size: 16px;         /* Ukuran font */
   line-height: 1.5;        /* Jarak antar baris */
-  max-width: 500px;        /* Lebar maksimal */
+  max-width: 950px;        /* Lebar maksimal */
   margin: 0 auto 20px auto; /* Margin auto untuk center */
 }
 
