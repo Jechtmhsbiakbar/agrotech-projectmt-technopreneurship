@@ -738,3 +738,90 @@ document.addEventListener("DOMContentLoaded", function () {
 
   elements.forEach((el) => observer.observe(el));
 })();
+
+/* ===== Tilted Card init (vanilla JS) ===== */
+(function () {
+  const config = {
+    rotateAmplitude: 12,   // derajat maksimal
+    scaleOnHover: 1.04,    // skala saat hover
+    ease: 0.12
+  };
+
+  function initTiltCards() {
+    const cards = document.querySelectorAll('.tilted-card');
+    cards.forEach((card) => {
+      const inner = card.querySelector('.tilted-card-inner');
+      const caption = card.querySelector('.tilted-card-caption');
+      let rect = null;
+      let rafId = null;
+      let state = { rx: 0, ry: 0, s: 1, tx: 0, ty: 0 };
+
+      function updateTransform() {
+        inner.style.transform = `rotateX(${state.rx}deg) rotateY(${state.ry}deg) scale(${state.s})`;
+        if (caption) {
+          caption.style.left = `${state.tx}px`;
+          caption.style.top = `${state.ty}px`;
+        }
+      }
+
+      function onMove(e) {
+        if (!rect) rect = card.getBoundingClientRect();
+        const mx = (e.clientX - rect.left) - rect.width / 2;
+        const my = (e.clientY - rect.top) - rect.height / 2;
+        const ry = (mx / (rect.width / 2)) * config.rotateAmplitude;
+        const rx = (my / (rect.height / 2)) * -config.rotateAmplitude;
+
+        // smoothly interpolate
+        state.rx += (rx - state.rx) * config.ease;
+        state.ry += (ry - state.ry) * config.ease;
+
+        // caption position (relative to card)
+        state.tx = e.clientX - rect.left;
+        state.ty = e.clientY - rect.top;
+
+        if (!rafId) {
+          rafId = requestAnimationFrame(() => {
+            updateTransform();
+            rafId = null;
+          });
+        }
+      }
+
+      function onEnter(e) {
+        rect = card.getBoundingClientRect();
+        card.classList.add('hovered');
+        state.s = config.scaleOnHover;
+        // small pop on the inner (translateZ effect simulated via box-shadow/overlay CSS)
+        inner.style.transition = 'transform 260ms cubic-bezier(.2,.9,.25,1)';
+        // animate scale quickly
+        state.s += 0; // keep for RAF interpolation if desired
+        updateTransform();
+      }
+
+      function onLeave() {
+        card.classList.remove('hovered');
+        // reset nicely
+        state.rx = 0; state.ry = 0; state.s = 1;
+        inner.style.transition = 'transform 420ms cubic-bezier(.2,.9,.25,1)';
+        updateTransform();
+      }
+
+      // Events
+      card.addEventListener('mousemove', onMove);
+      card.addEventListener('mouseenter', onEnter);
+      card.addEventListener('mouseleave', onLeave);
+
+      // Accessibility: keyboard focus — give gentle pop
+      card.addEventListener('focus', onEnter);
+      card.addEventListener('blur', onLeave);
+    });
+  }
+
+  // Init after DOM ready (safe to append to existing main.js)
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initTiltCards);
+  } else {
+    initTiltCards();
+  }
+})();
+
