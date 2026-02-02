@@ -2,242 +2,240 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>About AgroTech</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-    <script src="assets/js/main.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>About AgroTech</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script src="assets/js/main.js" defer></script>
 </head>
 
 <body>
 
-    <!-- HEADER -->
-    <header>
-        <div class="container">
-            <div class="logo">
-                <h2>AgroTech</h2>
+  <!-- HEADER -->
+  <header>
+    <div class="container">
+      <div class="logo">
+        <h2>AgroTech</h2>
+      </div>
+
+      <!-- Hamburger -->
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        ☰
+      </button>
+
+      <nav id="navMenu">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="technicians.html">Technicians</a></li>
+          <li><a href="booking.html">Book Service</a></li>
+          <li><a href="booking-result.html">My Booking</a></li>
+        </ul>
+      </nav>
+
+      <div class="cta">
+        <a href="#" class="btn-primary" id="openLoginModal">Login</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- LOGIN MODAL -->
+  <div id="loginModal" class="login-modal">
+    <div class="login-box">
+      <h2>Select Login Role</h2>
+      <button onclick="loginAs('user')" class="btn-primary">User</button>
+      <button onclick="loginAs('admin')" class="btn-secondary">Admin</button>
+      <button onclick="loginAs('teknisi')" class="btn-secondary">Teknisi</button>
+      <button id="closeLoginModal" class="btn-danger">Close</button>
+    </div>
+  </div>
+
+
+  <section class="page-hero">
+    <div class="container">
+      <h1>About AgroTech</h1>
+      <p>Empowering farmers through digital innovation.</p>
+    </div>
+  </section>
+
+  <section class="about-content">
+    <div class="container grid-2">
+      <div>
+        <h2>Our Vision</h2>
+        <p>To become the leading smart agriculture service platform in Southeast Asia.</p>
+      </div>
+
+      <div>
+        <h2>Our Mission</h2>
+        <ul>
+          <li>Connect farmers with certified technicians</li>
+          <li>Provide smart farming solutions</li>
+          <li>Improve agricultural productivity</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="team-section">
+    <div class="container">
+      <h2>Our Team</h2>
+      <div class="grid-3 team-tilt-grid">
+
+        <!-- Card 1 -->
+        <div class="tilted-card" data-name="Muhammad Fajriska" data-role="Project Manager">
+          <div class="tilted-card-inner">
+            <img class="tilted-card-img" src="assets/img/fahmi.jpg" alt="Fahmi Al-islami">
+            <div class="tilted-card-overlay">
+              <div class="overlay-content">
+                <h4>Fahmi Al-islami</h4>
+              </div>
             </div>
+          </div>
+          <div class="tilted-card-caption">Fahmi</div>
+        </div>
 
-            <nav>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
-                    <li><a href="technicians.html">Technicians</a></li>
-                    <li><a href="booking.html">Book Service</a></li>
-                    <li><a href="booking-result.html">My Booking</a></li>
-                </ul>
-            </nav>
-
-            <div class="cta">
-                <a href="#" class="btn-primary" id="openLoginModal">Login</a>
+        <!-- Card 2 -->
+        <div class="tilted-card" data-name="Ahmad Rizki" data-role="Frontend Developer">
+          <div class="tilted-card-inner">
+            <img class="tilted-card-img" src="assets/img/pando.jpg" alt="Silvando Miristica">
+            <div class="tilted-card-overlay">
+              <div class="overlay-content">
+                <h4>Silvando Miristica</h4>
+              </div>
             </div>
+          </div>
+          <div class="tilted-card-caption">pando</div>
         </div>
-    </header>
 
-    <!-- LOGIN MODAL -->
-    <div id="loginModal" class="login-modal">
-        <div class="login-box">
-            <h2>Select Login Role</h2>
-            <button onclick="loginAs('user')" class="btn-primary">User</button>
-            <button onclick="loginAs('admin')" class="btn-secondary">Admin</button>
-            <button onclick="loginAs('teknisi')" class="btn-secondary">Teknisi</button>
-            <button id="closeLoginModal" class="btn-danger">Close</button>
-        </div>
-    </div>
-
-
-    <section class="page-hero">
-        <div class="container">
-            <h1>About AgroTech</h1>
-            <p>Empowering farmers through digital innovation.</p>
-        </div>
-    </section>
-
-    <section class="about-content">
-        <div class="container grid-2">
-            <div>
-                <h2>Our Vision</h2>
-                <p>To become the leading smart agriculture service platform in Southeast Asia.</p>
+        <!-- Card 3 -->
+        <div class="tilted-card" data-name="Siti Aisyah" data-role="UI/UX Designer">
+          <div class="tilted-card-inner">
+            <img class="tilted-card-img" src="assets/img/mbut.jpg" alt="Muhammad Hasbih Akbar">
+            <div class="tilted-card-overlay">
+              <div class="overlay-content">
+                <h4>Muhammad Hasbih Akbar</h4>
+              </div>
             </div>
+          </div>
+          <div class="tilted-card-caption">Akbar</div>
+        </div>
 
-            <div>
-                <h2>Our Mission</h2>
-                <ul>
-                    <li>Connect farmers with certified technicians</li>
-                    <li>Provide smart farming solutions</li>
-                    <li>Improve agricultural productivity</li>
-                </ul>
+        <!-- Card 4 -->
+        <div class="tilted-card" data-name="Budi Santoso" data-role="Backend Developer">
+          <div class="tilted-card-inner">
+            <img class="tilted-card-img" src="assets/img/owen.png" alt="Muhammad Fajriska Maulana">
+            <div class="tilted-card-overlay">
+              <div class="overlay-content">
+                <h4>Muhammad Fajriska Maulana</h4>
+              </div>
             </div>
+          </div>
+          <div class="tilted-card-caption">Maulana</div>
         </div>
-    </section>
 
-    <section class="team-section">
-        <div class="container">
-            <h2>Our Team</h2>
-            <div class="grid-3 team-tilt-grid">
-
-  <!-- Card 1 -->
-  <div class="tilted-card" data-name="Muhammad Fajriska" data-role="Project Manager">
-    <div class="tilted-card-inner">
-      <img class="tilted-card-img"
-     src="assets/img/fahmi.jpg"
-     alt="Fahmi Al-islami">
-      <div class="tilted-card-overlay">
-        <div class="overlay-content">
-          <h4>Fahmi Al-islami</h4>
-        </div>
-      </div>
-    </div>
-    <div class="tilted-card-caption">Fahmi</div>
-  </div>
-
-  <!-- Card 2 -->
-  <div class="tilted-card" data-name="Ahmad Rizki" data-role="Frontend Developer">
-    <div class="tilted-card-inner">
-      <img class="tilted-card-img"
-     src="assets/img/pando.jpg"
-     alt="Silvando Miristica">
-      <div class="tilted-card-overlay">
-        <div class="overlay-content">
-          <h4>Silvando Miristica</h4>
-        </div>
-      </div>
-    </div>
-    <div class="tilted-card-caption">pando</div>
-  </div>
-
-  <!-- Card 3 -->
-  <div class="tilted-card" data-name="Siti Aisyah" data-role="UI/UX Designer">
-    <div class="tilted-card-inner">
-      <img class="tilted-card-img"
-     src="assets/img/mbut.jpg"
-     alt="Muhammad Hasbih Akbar">
-      <div class="tilted-card-overlay">
-        <div class="overlay-content">
-          <h4>Muhammad Hasbih Akbar</h4>
-        </div>
-      </div>
-    </div>
-    <div class="tilted-card-caption">Akbar</div>
-  </div>
-
-  <!-- Card 4 -->
-  <div class="tilted-card" data-name="Budi Santoso" data-role="Backend Developer">
-    <div class="tilted-card-inner">
-      <img class="tilted-card-img"
-     src="assets/img/owen.png"
-     alt="Muhammad Fajriska Maulana">
-      <div class="tilted-card-overlay">
-        <div class="overlay-content">
-          <h4>Muhammad Fajriska Maulana</h4>
-        </div>
-      </div>
-    </div>
-    <div class="tilted-card-caption">Maulana</div>
-  </div>
-
-  <!-- Card 5 -->
-  <div class="tilted-card" data-name="Dewi Lestari" data-role="Content Writer">
-    <div class="tilted-card-inner">
-      <img class="tilted-card-img"
-     src="assets/img/husen.jpg"
-     alt="Husen prasetyo">
-      <div class="tilted-card-overlay">
-        <div class="overlay-content">
-          <h4>Husen prasetyo</h4>
-        </div>
-      </div>
-    </div>
-    <div class="tilted-card-caption">Husen</div>
-  </div>
-
-  <!-- Card 6 -->
-  <div class="tilted-card" data-name="Rizal Maulana" data-role="Mobile Developer">
-    <div class="tilted-card-inner">
-      <img class="tilted-card-img"
-     src="assets/img/run.jpg"
-     alt="Harun Nur Setiawan">
-      <div class="tilted-card-overlay">
-        <div class="overlay-content">
-          <h4>Harun Nur Setiawan</h4>
-        </div>
-      </div>
-    </div>
-    <div class="tilted-card-caption">Harun</div>
-  </div>
-
-  <!-- Card 7 -->
-  <div class="tilted-card" data-name="Nabila Putri" data-role="Quality Assurance">
-    <div class="tilted-card-inner">
-      <img class="tilted-card-img"
-     src="assets/img/rizki.jpg"
-     alt="Muhammad Rizky">
-      <div class="tilted-card-overlay">
-        <div class="overlay-content">
-          <h4>Muhammad Rizky</h4>
-        </div>
-      </div>
-    </div>
-    <div class="tilted-card-caption">Iky</div>
-  </div>
-
-  <!-- Card 8 -->
-  <div class="tilted-card" data-name="Fajar Ramadhan" data-role="DevOps Engineer">
-    <div class="tilted-card-inner">
-      <img class="tilted-card-img"
-     src="assets/img/sitod.jpg"
-     alt="Azmi Surya Wijaya">
-      <div class="tilted-card-overlay">
-        <div class="overlay-content">
-          <h4>Azmi Surya Wijaya</h4>
-        </div>
-      </div>
-    </div>
-    <div class="tilted-card-caption">Azmi</div>
-  </div>
-
-</div>
-
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-
-                <div>
-                    <h3>AgroTech</h3>
-                    <p>Platform connecting farmers with agricultural technicians.</p>
-                </div>
-
-                <div>
-                    <h4>Company</h4>
-                    <ul>
-                        <li><a href="about.html">About</a></li>
-                        <li><a href="#">Careers</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4>Services</h4>
-                    <ul>
-                        <li>Field Technician</li>
-                        <li>IoT Installation</li>
-                        <li>Soil Monitoring</li>
-                    </ul>
-                </div>
-
-                <div>
-                    <h4>Follow Us</h4>
-                    <p>Instagram | LinkedIn | GitHub</p>
-                </div>
-
+        <!-- Card 5 -->
+        <div class="tilted-card" data-name="Dewi Lestari" data-role="Content Writer">
+          <div class="tilted-card-inner">
+            <img class="tilted-card-img" src="assets/img/husen.jpg" alt="Husen prasetyo">
+            <div class="tilted-card-overlay">
+              <div class="overlay-content">
+                <h4>Husen prasetyo</h4>
+              </div>
             </div>
-
-            <p class="copyright">© 2026 AgroTech. All rights reserved.</p>
+          </div>
+          <div class="tilted-card-caption">Husen</div>
         </div>
-    </footer>
 
+        <!-- Card 6 -->
+        <div class="tilted-card" data-name="Rizal Maulana" data-role="Mobile Developer">
+          <div class="tilted-card-inner">
+            <img class="tilted-card-img" src="assets/img/run.jpg" alt="Harun Nur Setiawan">
+            <div class="tilted-card-overlay">
+              <div class="overlay-content">
+                <h4>Harun Nur Setiawan</h4>
+              </div>
+            </div>
+          </div>
+          <div class="tilted-card-caption">Harun</div>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="tilted-card" data-name="Nabila Putri" data-role="Quality Assurance">
+          <div class="tilted-card-inner">
+            <img class="tilted-card-img" src="assets/img/rizki.jpg" alt="Muhammad Rizky">
+            <div class="tilted-card-overlay">
+              <div class="overlay-content">
+                <h4>Muhammad Rizky</h4>
+              </div>
+            </div>
+          </div>
+          <div class="tilted-card-caption">Iky</div>
+        </div>
+
+        <!-- Card 8 -->
+        <div class="tilted-card" data-name="Fajar Ramadhan" data-role="DevOps Engineer">
+          <div class="tilted-card-inner">
+            <img class="tilted-card-img" src="assets/img/sitod.jpg" alt="Azmi Surya Wijaya">
+            <div class="tilted-card-overlay">
+              <div class="overlay-content">
+                <h4>Azmi Surya Wijaya</h4>
+              </div>
+            </div>
+          </div>
+          <div class="tilted-card-caption">Azmi</div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+
+        <div>
+          <h3>AgroTech</h3>
+          <p>Platform connecting farmers with agricultural technicians.</p>
+        </div>
+
+        <div>
+          <h4>Company</h4>
+          <ul>
+            <li><a href="about.html">About</a></li>
+            <li><a href="#">Careers</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Services</h4>
+          <ul>
+            <li>Field Technician</li>
+            <li>IoT Installation</li>
+            <li>Soil Monitoring</li>
+          </ul>
+        </div>
+
+        <div>
+          <h4>Follow Us</h4>
+          <p>Instagram | LinkedIn | GitHub</p>
+        </div>
+
+      </div>
+
+      <p class="copyright">© 2026 AgroTech. All rights reserved.</p>
+    </div>
+  </footer>
+
+<script>
+  const hamburger = document.getElementById("hamburger");
+  const navMenu = document.getElementById("navMenu");
+
+  hamburger.addEventListener("click", () => {
+    navMenu.classList.toggle("active");
+  });
+</script>
 
 </body>
 

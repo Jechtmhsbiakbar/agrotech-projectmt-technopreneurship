@@ -547,8 +547,12 @@
             <div class="logo">
                 <h2>AgroTech</h2>
             </div>
+            <!-- Hamburger -->
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                ☰
+            </button>
 
-            <nav>
+            <nav id="navMenu">
                 <ul>
                     <li><a href="admin.html" class="active">Admin</a></li>
                 </ul>
@@ -628,7 +632,8 @@
 
                 <!-- Search Box -->
                 <div class="search-box">
-                    <input type="text" class="search-input" id="searchInput" placeholder="🔍 Cari berdasarkan nama, teknisi, atau lokasi...">
+                    <input type="text" class="search-input" id="searchInput"
+                        placeholder="🔍 Cari berdasarkan nama, teknisi, atau lokasi...">
                 </div>
 
                 <!-- Bookings List -->
@@ -718,7 +723,7 @@
             const totalBookings = allBookings.length;
             const pendingBookings = allBookings.filter(b => !b.isPaid).length;
             const completedBookings = allBookings.filter(b => b.isPaid).length;
-            
+
             const totalRevenue = allBookings
                 .filter(b => b.isPaid)
                 .reduce((sum, booking) => {
@@ -915,10 +920,10 @@
 
         function setupSearch() {
             const searchInput = document.getElementById("searchInput");
-            
+
             searchInput.addEventListener("input", (e) => {
                 const searchTerm = e.target.value.toLowerCase().trim();
-                
+
                 if (searchTerm === "") {
                     renderBookings(allBookings);
                     return;
@@ -926,9 +931,9 @@
 
                 const filtered = allBookings.filter(booking => {
                     return booking.name.toLowerCase().includes(searchTerm) ||
-                           booking.tech.toLowerCase().includes(searchTerm) ||
-                           booking.location.toLowerCase().includes(searchTerm) ||
-                           booking.phone.includes(searchTerm);
+                        booking.tech.toLowerCase().includes(searchTerm) ||
+                        booking.location.toLowerCase().includes(searchTerm) ||
+                        booking.phone.includes(searchTerm);
                 });
 
                 renderBookings(filtered);
@@ -962,11 +967,11 @@
             }
 
             const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
-            
+
             if (index >= 0 && index < bookings.length) {
                 bookings.splice(index, 1);
                 localStorage.setItem("bookings", JSON.stringify(bookings));
-                
+
                 // Reload dashboard
                 loadAdminDashboard();
                 loadTechnicians();
@@ -975,7 +980,7 @@
 
         function exportData() {
             const bookings = JSON.parse(localStorage.getItem("bookings")) || [];
-            
+
             if (bookings.length === 0) {
                 alert("No data to export!");
                 return;
@@ -1011,6 +1016,14 @@
 
             alert("✅ Data exported successfully!");
         }
+    </script>
+    <script>
+        const hamburger = document.getElementById("hamburger");
+        const navMenu = document.getElementById("navMenu");
+
+        hamburger.addEventListener("click", () => {
+            navMenu.classList.toggle("active");
+        });
     </script>
 
 </body>

@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <title>My Bookings | AgroTech</title>
     <link rel="stylesheet" href="assets/css/style.css">
@@ -18,8 +19,12 @@
             <div class="logo">
                 <h2>AgroTech</h2>
             </div>
+            <!-- Hamburger -->
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                ☰
+            </button>
 
-            <nav>
+            <nav id="navMenu">
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About</a></li>
@@ -54,7 +59,7 @@
                         <h2>🔔 Booking Terbaru</h2>
                         <span class="status-badge pending">Menunggu Pembayaran</span>
                     </div>
-                    
+
                     <div class="booking-info" id="latestBookingDetails">
                         <!-- Loaded via JavaScript -->
                     </div>
@@ -67,7 +72,8 @@
                                 <span class="price-label">Total Biaya:</span>
                                 <span class="price-value" id="totalPrice">-</span>
                             </div>
-                            <p class="payment-note">💡 Pembayaran dapat dilakukan langsung kepada teknisi atau melalui transfer</p>
+                            <p class="payment-note">💡 Pembayaran dapat dilakukan langsung kepada teknisi atau melalui
+                                transfer</p>
                         </div>
                         <button onclick="processPayment()" class="btn-primary btn-large">
                             <span>💳 Bayar Sekarang</span>
@@ -80,7 +86,7 @@
                             <h3>✅ Pembayaran Berhasil!</h3>
                             <p>Booking Anda telah dikonfirmasi</p>
                         </div>
-                        
+
                         <div class="contact-info">
                             <p class="contact-title">Silakan hubungi teknisi untuk konfirmasi jadwal:</p>
                             <div class="technician-contact">
@@ -95,7 +101,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="action-buttons">
                             <a href="index.html" class="btn-secondary">← Kembali ke Beranda</a>
                             <a href="booking.html" class="btn-primary">+ Booking Baru</a>
@@ -170,6 +176,14 @@
             <p class="copyright">© 2026 AgroTech. All rights reserved.</p>
         </div>
     </footer>
+<script>
+  const hamburger = document.getElementById("hamburger");
+  const navMenu = document.getElementById("navMenu");
+
+  hamburger.addEventListener("click", () => {
+    navMenu.classList.toggle("active");
+  });
+</script>
 
 </body>
 

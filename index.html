@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta charset="UTF-8">
     <title>AgroTech | Smart Agriculture Service Platform</title>
     <link rel="stylesheet" href="assets/css/style.css">
@@ -17,8 +18,12 @@
             <div class="logo">
                 <h2>AgroTech</h2>
             </div>
+            <!-- Hamburger -->
+            <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                ☰
+            </button>
 
-            <nav>
+            <nav id="navMenu">
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="about.html">About</a></li>
@@ -27,10 +32,10 @@
                     <li><a href="booking-result.html">My Booking</a></li>
                 </ul>
             </nav>
-
             <div class="cta">
                 <a href="#" class="btn-primary" id="openLoginModal">Login</a>
             </div>
+
         </div>
     </header>
 
@@ -177,6 +182,14 @@
             <p class="copyright">© 2026 AgroTech. All rights reserved.</p>
         </div>
     </footer>
+<script>
+  const hamburger = document.getElementById("hamburger");
+  const navMenu = document.getElementById("navMenu");
+
+  hamburger.addEventListener("click", () => {
+    navMenu.classList.toggle("active");
+  });
+</script>
 
 </body>
 

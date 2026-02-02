@@ -408,8 +408,12 @@
       <div class="logo">
         <h2>AgroTech</h2>
       </div>
+      <!-- Hamburger -->
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        ☰
+      </button>
 
-      <nav>
+      <nav id="navMenu">
         <ul>
           <li><a href="teknisi.html" class="active">Dashboard</a></li>
         </ul>
@@ -546,7 +550,7 @@
       const totalJobs = jobs.length;
       const pendingJobs = jobs.filter(j => !j.isPaid).length;
       const completedJobs = jobs.filter(j => j.isPaid).length;
-      
+
       // Calculate total earnings (hanya dari jobs yang sudah dibayar)
       const totalEarnings = jobs
         .filter(j => j.isPaid)
@@ -672,7 +676,7 @@
 
     function filterJobs(filter) {
       currentFilter = filter;
-      
+
       // Update active button
       document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.classList.remove('active');
@@ -690,16 +694,24 @@
       }
 
       const jobs = JSON.parse(localStorage.getItem("bookings")) || [];
-      
+
       if (index >= 0 && index < jobs.length) {
         jobs[index].isPaid = true;
         localStorage.setItem("bookings", JSON.stringify(jobs));
-        
+
         // Reload dashboard
         loadTechnicianDashboard();
       }
     }
   </script>
+<script>
+  const hamburger = document.getElementById("hamburger");
+  const navMenu = document.getElementById("navMenu");
+
+  hamburger.addEventListener("click", () => {
+    navMenu.classList.toggle("active");
+  });
+</script>
 
 </body>
 
