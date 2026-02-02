@@ -2978,6 +2978,7 @@ body:has(.booking-form) .btn-primary:hover {
 }
 
 .technician-list {
+  margin-top: 0px;
   opacity: 1 !important;
   visibility: visible !important;
   animation: none !important;
@@ -2986,7 +2987,6 @@ body:has(.booking-form) .btn-primary:hover {
 .technician-list,
 .container,
 .grid-3 {
-  margin-top: 0px;
   opacity: 1 !important;
   visibility: visible !important;
   animation: none !important;
@@ -2995,8 +2995,7 @@ body:has(.booking-form) .btn-primary:hover {
 .dashboard-header,
 .stats-grid,
 .stat-card,
-.bookings-section,
-.technician-list{
+.bookings-section {
   opacity: 1 !important;
   visibility: visible !important;
   animation: none !important;
